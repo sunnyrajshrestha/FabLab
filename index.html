@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>FabLab — Room 408</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --pink: #FF006E;
+  --pink2: #FF4DA6;
+  --pink3: #ff85c2;
+  --cyan: #00F5FF;
+  --cyan2: #7FFFFD;
+  --dark: #05020D;
+  --dark2: #0D0818;
+  --dark3: #140D2B;
+  --panel: rgba(255,0,110,0.06);
+  --border: rgba(255,0,110,0.3);
+  --text: #F0E6FF;
+  --sub: #A89ABF;
+  --glow-pink: 0 0 20px rgba(255,0,110,0.6), 0 0 60px rgba(255,0,110,0.2);
+  --glow-cyan: 0 0 20px rgba(0,245,255,0.5), 0 0 60px rgba(0,245,255,0.15);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+html{scroll-behavior:smooth;}
+
+body{
+  background: var(--dark);
+  color: var(--text);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 16px;
+  overflow-x: hidden;
+  cursor: crosshair;
+}
+
+/* SCANLINES overlay */
+body::before{
+  content:'';
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.15) 2px,
+    rgba(0,0,0,0.15) 4px
+  );
+  pointer-events:none;
+  z-index:9999;
+}
+
+/* GRID BG */
+body::after{
+  content:'';
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  background-image:
+    linear-gradient(rgba(255,0,110,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,0,110,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  z-index:1000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 40px;
+  background: rgba(5,2,13,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo{
+  font-family:'Orbitron',monospace;
+  font-size:1.1rem;
+  font-weight:900;
+  color:var(--pink);
+  text-shadow: var(--glow-pink);
+  letter-spacing:3px;
+  text-decoration:none;
+}
+.nav-logo span{color:var(--cyan);text-shadow: var(--glow-cyan);}
+.nav-links{display:flex;gap:28px;list-style:none;}
+.nav-links a{
+  color:var(--sub);
+  text-decoration:none;
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.78rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  transition:color .2s,text-shadow .2s;
+}
+.nav-links a:hover{color:var(--pink);text-shadow:var(--glow-pink);}
+.nav-nfc{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.72rem;
+  color:var(--cyan);
+  border:1px solid var(--cyan);
+  padding:6px 14px;
+  letter-spacing:2px;
+  text-decoration:none;
+  transition:all .2s;
+  position:relative;
+  overflow:hidden;
+}
+.nav-nfc:hover{background:rgba(0,245,255,0.1);box-shadow:var(--glow-cyan);}
+
+/* ── HERO ── */
+#hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:100px 20px 60px;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero-bg-orb{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(80px);
+  pointer-events:none;
+}
+.orb1{width:500px;height:500px;background:radial-gradient(circle,rgba(255,0,110,0.25),transparent 70%);top:-100px;left:-100px;animation:float1 8s ease-in-out infinite;}
+.orb2{width:400px;height:400px;background:radial-gradient(circle,rgba(0,245,255,0.15),transparent 70%);bottom:0;right:-50px;animation:float2 10s ease-in-out infinite;}
+.orb3{width:300px;height:300px;background:radial-gradient(circle,rgba(140,0,255,0.2),transparent 70%);top:40%;left:50%;transform:translateX(-50%);animation:float1 12s ease-in-out infinite reverse;}
+
+@keyframes float1{0%,100%{transform:translateY(0);}50%{transform:translateY(-30px);}}
+@keyframes float2{0%,100%{transform:translateY(0);}50%{transform:translateY(25px);}}
+
+.hero-tag{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.72rem;
+  letter-spacing:4px;
+  color:var(--pink);
+  text-transform:uppercase;
+  margin-bottom:16px;
+  opacity:.8;
+}
+.hero-tag::before{content:'[ ';} .hero-tag::after{content:' ]';}
+
+h1{
+  font-family:'Orbitron',monospace;
+  font-size:clamp(2.8rem,8vw,6rem);
+  font-weight:900;
+  line-height:1;
+  letter-spacing:4px;
+  position:relative;
+  z-index:1;
+}
+h1 .line1{
+  display:block;
+  color:transparent;
+  -webkit-text-stroke:2px var(--pink);
+  text-shadow: var(--glow-pink);
+}
+h1 .line2{
+  display:block;
+  background: linear-gradient(135deg, var(--pink) 0%, var(--cyan) 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  filter: drop-shadow(0 0 30px rgba(255,0,110,0.4));
+}
+
+.hero-sub{
+  font-family:'Rajdhani',sans-serif;
+  font-size:1.2rem;
+  font-weight:300;
+  color:var(--sub);
+  letter-spacing:3px;
+  margin:20px 0 12px;
+  text-transform:uppercase;
+}
+.hero-room{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.85rem;
+  color:var(--cyan);
+  letter-spacing:6px;
+  text-shadow:var(--glow-cyan);
+  margin-bottom:40px;
+}
+
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;}
+.btn-primary{
+  font-family:'Orbitron',monospace;
+  font-size:0.78rem;
+  font-weight:700;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  text-decoration:none;
+  padding:14px 32px;
+  background: linear-gradient(135deg, var(--pink), #8B00FF);
+  color:#fff;
+  border:none;
+  cursor:pointer;
+  clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+  transition:all .3s;
+  box-shadow:0 0 30px rgba(255,0,110,0.4);
+  position:relative;
+  overflow:hidden;
+}
+.btn-primary::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.1),transparent);opacity:0;transition:.3s;}
+.btn-primary:hover{box-shadow:var(--glow-pink),0 0 80px rgba(255,0,110,0.3);transform:translateY(-2px);}
+.btn-primary:hover::after{opacity:1;}
+
+.btn-secondary{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.78rem;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  text-decoration:none;
+  padding:14px 32px;
+  background:transparent;
+  color:var(--cyan);
+  border:1px solid var(--cyan);
+  cursor:pointer;
+  clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+  transition:all .3s;
+}
+.btn-secondary:hover{background:rgba(0,245,255,0.08);box-shadow:var(--glow-cyan);transform:translateY(-2px);}
+
+/* STATUS BAR */
+.status-bar{
+  display:flex;gap:32px;margin-top:60px;
+  flex-wrap:wrap;justify-content:center;
+}
+.status-item{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.72rem;
+  letter-spacing:2px;
+  color:var(--sub);
+  display:flex;align-items:center;gap:8px;
+}
+.status-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--pink);
+  box-shadow:var(--glow-pink);
+  animation:pulse 2s ease-in-out infinite;
+}
+.status-dot.cyan{background:var(--cyan);box-shadow:var(--glow-cyan);}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+/* ── SECTIONS ── */
+section{
+  padding:80px 40px;
+  max-width:1200px;
+  margin:0 auto;
+  position:relative;
+  z-index:1;
+}
+
+.section-header{
+  display:flex;align-items:center;gap:16px;
+  margin-bottom:48px;
+}
+.section-num{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.72rem;
+  color:var(--pink);
+  letter-spacing:3px;
+}
+.section-title{
+  font-family:'Orbitron',monospace;
+  font-size:1.6rem;
+  font-weight:700;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  background:linear-gradient(90deg,var(--text),var(--sub));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.section-line{flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent);}
+
+/* ── BOOKING ── */
+#booking{background:var(--dark2);border-radius:0;padding:80px 40px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+
+.booking-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:24px;
+}
+@media(max-width:768px){.booking-grid{grid-template-columns:1fr;}}
+
+.booking-card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  padding:28px;
+  position:relative;
+  overflow:hidden;
+  transition:all .3s;
+  cursor:pointer;
+}
+.booking-card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--pink),transparent);
+  opacity:0;transition:.3s;
+}
+.booking-card:hover{
+  border-color:var(--pink);
+  background:rgba(255,0,110,0.08);
+  transform:translateY(-4px);
+  box-shadow:0 8px 40px rgba(255,0,110,0.15);
+}
+.booking-card:hover::before{opacity:1;}
+
+.booking-card-tag{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.65rem;
+  letter-spacing:3px;
+  color:var(--pink);
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+.booking-card h3{
+  font-family:'Orbitron',monospace;
+  font-size:1.1rem;
+  font-weight:700;
+  margin-bottom:10px;
+  color:var(--text);
+}
+.booking-card p{
+  font-size:0.9rem;
+  line-height:1.6;
+  color:var(--sub);
+  margin-bottom:20px;
+}
+.booking-card .book-btn{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.72rem;
+  letter-spacing:2px;
+  color:var(--pink);
+  background:transparent;
+  border:1px solid var(--border);
+  padding:8px 20px;
+  cursor:pointer;
+  text-transform:uppercase;
+  transition:all .2s;
+  text-decoration:none;
+  display:inline-block;
+}
+.booking-card .book-btn:hover{background:rgba(255,0,110,0.1);border-color:var(--pink);}
+
+.availability{
+  display:flex;align-items:center;gap:8px;
+  margin-bottom:16px;
+}
+.avail-dot{width:6px;height:6px;border-radius:50%;background:#00FF88;box-shadow:0 0 8px #00FF88;}
+.avail-dot.busy{background:#FF4444;box-shadow:0 0 8px #FF4444;}
+.avail-text{font-family:'Share Tech Mono',monospace;font-size:0.68rem;letter-spacing:2px;color:var(--sub);}
+
+/* BOOKING FORM */
+.booking-form-wrap{
+  background:var(--panel);
+  border:1px solid var(--border);
+  padding:36px;
+  margin-top:32px;
+  position:relative;
+}
+.booking-form-wrap::after{
+  content:'BOOKING TERMINAL';
+  position:absolute;top:-10px;left:24px;
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.65rem;
+  letter-spacing:3px;
+  color:var(--pink);
+  background:var(--dark2);
+  padding:0 12px;
+}
+
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+@media(max-width:600px){.form-row{grid-template-columns:1fr;}}
+
+.form-group{display:flex;flex-direction:column;gap:8px;}
+.form-group label{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.68rem;
+  letter-spacing:2px;
+  color:var(--pink);
+  text-transform:uppercase;
+}
+.form-group input,.form-group select,.form-group textarea{
+  background:rgba(255,0,110,0.04);
+  border:1px solid rgba(255,0,110,0.2);
+  color:var(--text);
+  padding:12px 16px;
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.85rem;
+  outline:none;
+  transition:all .2s;
+  width:100%;
+}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{
+  border-color:var(--pink);
+  box-shadow:0 0 0 2px rgba(255,0,110,0.1);
+  background:rgba(255,0,110,0.06);
+}
+.form-group select option{background:var(--dark2);}
+
+.submit-btn{
+  font-family:'Orbitron',monospace;
+  font-size:0.78rem;
+  font-weight:700;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  padding:14px 40px;
+  background:linear-gradient(135deg,var(--pink),#8B00FF);
+  color:#fff;
+  border:none;
+  cursor:pointer;
+  clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);
+  transition:all .3s;
+  box-shadow:0 0 20px rgba(255,0,110,0.3);
+  margin-top:8px;
+}
+.submit-btn:hover{box-shadow:var(--glow-pink);transform:translateY(-2px);}
+
+/* ── MACHINES ── */
+.machines-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:20px;
+}
+.machine-card{
+  background:var(--panel);
+  border:1px solid rgba(255,0,110,0.15);
+  padding:24px;
+  position:relative;
+  transition:all .3s;
+  overflow:hidden;
+}
+.machine-card::before{
+  content:'';
+  position:absolute;
+  bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+  opacity:0;transition:.3s;
+}
+.machine-card:hover{
+  border-color:rgba(0,245,255,0.4);
+  background:rgba(0,245,255,0.04);
+  transform:translateY(-4px);
+}
+.machine-card:hover::before{opacity:1;}
+
+.machine-icon{
+  font-size:2.2rem;
+  margin-bottom:16px;
+  display:block;
+  filter:hue-rotate(310deg);
+}
+.machine-name{
+  font-family:'Orbitron',monospace;
+  font-size:0.95rem;
+  font-weight:700;
+  margin-bottom:8px;
+  color:var(--text);
+  letter-spacing:2px;
+}
+.machine-spec{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.75rem;
+  color:var(--sub);
+  line-height:1.8;
+}
+.machine-spec span{color:var(--cyan);margin-right:4px;}
+
+.machine-status{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.65rem;
+  letter-spacing:2px;
+  margin-top:14px;
+  padding:4px 12px;
+  border:1px solid;
+  text-transform:uppercase;
+}
+.machine-status.online{color:#00FF88;border-color:rgba(0,255,136,0.3);}
+.machine-status.offline{color:#FF4444;border-color:rgba(255,68,68,0.3);}
+.machine-status.busy{color:#FFB000;border-color:rgba(255,176,0,0.3);}
+
+/* ── INVENTORY ── */
+.inventory-table{
+  width:100%;
+  border-collapse:collapse;
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.8rem;
+}
+.inventory-table th{
+  font-family:'Orbitron',monospace;
+  font-size:0.65rem;
+  letter-spacing:3px;
+  color:var(--pink);
+  text-transform:uppercase;
+  padding:14px 16px;
+  text-align:left;
+  border-bottom:1px solid var(--border);
+}
+.inventory-table td{
+  padding:14px 16px;
+  border-bottom:1px solid rgba(255,0,110,0.08);
+  color:var(--sub);
+  transition:color .2s;
+}
+.inventory-table tr:hover td{color:var(--text);background:rgba(255,0,110,0.03);}
+.inv-badge{
+  display:inline-block;padding:3px 10px;font-size:0.65rem;letter-spacing:2px;
+  text-transform:uppercase;
+}
+.inv-badge.high{background:rgba(0,255,136,0.1);color:#00FF88;border:1px solid rgba(0,255,136,0.2);}
+.inv-badge.low{background:rgba(255,176,0,0.1);color:#FFB000;border:1px solid rgba(255,176,0,0.2);}
+.inv-badge.out{background:rgba(255,68,68,0.1);color:#FF4444;border:1px solid rgba(255,68,68,0.2);}
+
+/* ── KNOWLEDGE BASE ── */
+.kb-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:20px;
+}
+.kb-card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  padding:28px;
+  transition:all .3s;
+  position:relative;
+  overflow:hidden;
+}
+.kb-card::after{
+  content:'';
+  position:absolute;
+  top:0;right:0;
+  width:60px;height:60px;
+  background:radial-gradient(circle at top right,rgba(255,0,110,0.15),transparent 70%);
+  pointer-events:none;
+}
+.kb-card:hover{
+  border-color:var(--pink2);
+  background:rgba(255,0,110,0.07);
+  transform:translateY(-3px);
+  box-shadow:0 8px 30px rgba(255,0,110,0.1);
+}
+.kb-category{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.65rem;
+  letter-spacing:3px;
+  color:var(--cyan);
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+.kb-card h3{
+  font-family:'Orbitron',monospace;
+  font-size:0.95rem;
+  font-weight:700;
+  margin-bottom:10px;
+  color:var(--text);
+}
+.kb-card p{font-size:0.88rem;line-height:1.7;color:var(--sub);}
+.kb-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.kb-tag{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.65rem;
+  letter-spacing:1px;
+  padding:3px 10px;
+  background:rgba(0,245,255,0.08);
+  border:1px solid rgba(0,245,255,0.2);
+  color:var(--cyan2);
+  text-transform:uppercase;
+}
+
+/* ── CONTACT ── */
+#contact{
+  background:linear-gradient(135deg,var(--dark3),var(--dark));
+  border-top:1px solid var(--border);
+  padding:80px 40px;
+}
+.contact-inner{max-width:1200px;margin:0 auto;}
+
+.contact-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  margin-top:48px;
+}
+@media(max-width:768px){.contact-grid{grid-template-columns:1fr;gap:40px;}}
+
+.contact-info{}
+.officer-card{
+  display:flex;gap:20px;align-items:flex-start;
+  background:var(--panel);
+  border:1px solid var(--border);
+  padding:28px;
+  margin-bottom:24px;
+  position:relative;
+}
+.officer-card::before{
+  content:'ENGINEERING OFFICER';
+  position:absolute;top:-10px;left:20px;
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.6rem;letter-spacing:3px;
+  color:var(--pink);background:var(--dark3);padding:0 12px;
+}
+.officer-avatar{
+  width:64px;height:64px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--pink),#8B00FF);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Orbitron',monospace;font-size:1.4rem;font-weight:900;
+  color:#fff;
+  clip-path:polygon(15% 0%,85% 0%,100% 15%,100% 85%,85% 100%,15% 100%,0% 85%,0% 15%);
+}
+.officer-name{
+  font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:700;
+  color:var(--text);margin-bottom:4px;
+}
+.officer-title{
+  font-family:'Share Tech Mono',monospace;font-size:0.72rem;
+  letter-spacing:2px;color:var(--pink);margin-bottom:10px;
+}
+.officer-email a{
+  font-family:'Share Tech Mono',monospace;font-size:0.8rem;
+  color:var(--cyan);text-decoration:none;letter-spacing:1px;
+  transition:text-shadow .2s;
+}
+.officer-email a:hover{text-shadow:var(--glow-cyan);}
+
+.contact-details-list{
+  list-style:none;
+  display:flex;flex-direction:column;gap:14px;
+}
+.contact-details-list li{
+  display:flex;align-items:center;gap:14px;
+  font-family:'Share Tech Mono',monospace;font-size:0.82rem;color:var(--sub);
+}
+.cd-icon{
+  width:36px;height:36px;flex-shrink:0;
+  background:rgba(255,0,110,0.08);
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.9rem;
+}
+
+/* NFC SECTION */
+.nfc-panel{
+  background:var(--panel);
+  border:1px solid var(--border);
+  padding:36px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.nfc-panel::before{
+  content:'';
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at center,rgba(0,245,255,0.06),transparent 70%);
+  pointer-events:none;
+}
+.nfc-circle{
+  width:120px;height:120px;
+  border-radius:50%;
+  background:linear-gradient(135deg,rgba(255,0,110,0.2),rgba(0,245,255,0.1));
+  border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 20px;
+  position:relative;
+  animation:nfc-pulse 3s ease-in-out infinite;
+}
+.nfc-circle::before,.nfc-circle::after{
+  content:'';
+  position:absolute;
+  border-radius:50%;
+  border:1px solid var(--pink);
+  animation:nfc-ring 3s ease-out infinite;
+}
+.nfc-circle::before{width:150px;height:150px;animation-delay:0s;}
+.nfc-circle::after{width:180px;height:180px;animation-delay:.5s;}
+@keyframes nfc-pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,0,110,0.4);}50%{box-shadow:0 0 20px 10px rgba(255,0,110,0.1);}}
+@keyframes nfc-ring{0%{transform:scale(0.8);opacity:0.8;}100%{transform:scale(1.3);opacity:0;}}
+
+.nfc-label{
+  font-family:'Orbitron',monospace;font-size:1rem;font-weight:700;
+  color:var(--pink);letter-spacing:4px;text-transform:uppercase;
+  text-shadow:var(--glow-pink);margin-bottom:12px;
+}
+.nfc-desc{
+  font-family:'Share Tech Mono',monospace;font-size:0.8rem;
+  color:var(--sub);line-height:1.7;letter-spacing:1px;
+  margin-bottom:20px;
+}
+.nfc-url{
+  font-family:'Share Tech Mono',monospace;font-size:0.85rem;
+  color:var(--cyan);letter-spacing:2px;
+  border:1px solid rgba(0,245,255,0.3);
+  padding:10px 20px;
+  display:inline-block;
+  text-decoration:none;
+  transition:all .2s;
+}
+.nfc-url:hover{background:rgba(0,245,255,0.08);box-shadow:var(--glow-cyan);}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--dark);
+  border-top:1px solid rgba(255,0,110,0.15);
+  padding:28px 40px;
+  display:flex;
+  align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:16px;
+}
+.footer-logo{
+  font-family:'Orbitron',monospace;font-size:0.85rem;font-weight:900;
+  color:var(--pink);letter-spacing:3px;text-decoration:none;
+  text-shadow:var(--glow-pink);
+}
+.footer-copy{
+  font-family:'Share Tech Mono',monospace;font-size:0.7rem;
+  color:var(--sub);letter-spacing:2px;
+}
+
+/* ── MODAL ── */
+.modal-overlay{
+  position:fixed;inset:0;
+  background:rgba(5,2,13,0.9);
+  backdrop-filter:blur(10px);
+  z-index:9000;
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{
+  background:var(--dark2);
+  border:1px solid var(--border);
+  padding:40px;
+  max-width:520px;width:100%;
+  position:relative;
+  transform:translateY(20px);transition:transform .3s;
+}
+.modal-overlay.open .modal{transform:translateY(0);}
+.modal-title{
+  font-family:'Orbitron',monospace;font-size:1.2rem;font-weight:700;
+  color:var(--pink);letter-spacing:3px;margin-bottom:8px;
+}
+.modal-sub{
+  font-family:'Share Tech Mono',monospace;font-size:0.75rem;
+  color:var(--sub);letter-spacing:2px;margin-bottom:24px;
+}
+.modal-close{
+  position:absolute;top:16px;right:16px;
+  background:transparent;border:none;
+  font-family:'Share Tech Mono',monospace;font-size:1.2rem;
+  color:var(--sub);cursor:pointer;transition:color .2s;
+}
+.modal-close:hover{color:var(--pink);}
+.success-msg{
+  text-align:center;padding:20px 0;
+  font-family:'Orbitron',monospace;font-size:1rem;
+  color:#00FF88;letter-spacing:3px;
+  display:none;
+}
+.success-msg span{display:block;font-size:2rem;margin-bottom:12px;}
+
+/* GLITCH */
+@keyframes glitch{
+  0%,100%{text-shadow:var(--glow-pink);}
+  25%{text-shadow:-2px 0 var(--cyan), 2px 0 var(--pink);}
+  50%{text-shadow:2px 0 var(--cyan), -2px 0 var(--pink);}
+  75%{text-shadow:-1px 0 #8B00FF, 1px 0 var(--pink);}
+}
+.glitch-text{animation:glitch 6s ease-in-out infinite;}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--dark);}
+::-webkit-scrollbar-thumb{background:var(--pink);border-radius:2px;}
+
+/* Mobile */
+@media(max-width:768px){
+  nav{padding:12px 20px;}
+  .nav-links{display:none;}
+  section{padding:60px 20px;}
+  #booking{padding:60px 20px;}
+  #contact{padding:60px 20px;}
+  footer{padding:20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#hero">FAB<span>LAB</span> CU</a>
+  <ul class="nav-links">
+    <li><a href="#booking">Book</a></li>
+    <li><a href="#machines">Machines</a></li>
+    <li><a href="#inventory">Inventory</a></li>
+    <li><a href="#knowledge">Knowledge</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-nfc" href="#contact">📡 NFC TAP</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-orb orb1"></div>
+  <div class="hero-bg-orb orb2"></div>
+  <div class="hero-bg-orb orb3"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="hero-tag">Chulalongkorn University · CSII</div>
+    <h1>
+      <span class="line1 glitch-text">FABRICATION</span>
+      <span class="line2">LABORATORY</span>
+    </h1>
+    <p class="hero-sub">Make · Design · Innovate · Build</p>
+    <p class="hero-room">▸ ROOM 408 · 4TH FLOOR · CSII BUILDING ◂</p>
+    <div class="hero-btns">
+      <a class="btn-primary" href="#booking">Book a Machine</a>
+      <a class="btn-secondary" href="#machines">Explore Equipment</a>
+    </div>
+    <div class="status-bar">
+      <div class="status-item"><div class="status-dot"></div>LAB ONLINE</div>
+      <div class="status-item"><div class="status-dot cyan"></div>8 MACHINES ACTIVE</div>
+      <div class="status-item"><div class="status-dot"></div>OPEN MON–FRI 09:00–17:00</div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<div id="booking">
+<section style="max-width:1200px;margin:0 auto;padding:0;">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Book Equipment</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="booking-grid">
+    <div class="booking-card" onclick="openModal('3D Printer (FDM/Resin)')">
+      <div class="booking-card-tag">⬡ 3D Printing Station</div>
+      <h3>3D PRINTERS</h3>
+      <div class="availability"><div class="avail-dot"></div><div class="avail-text">3 / 4 UNITS AVAILABLE</div></div>
+      <p>FDM and resin printing. Supports PLA, PETG, ABS, flexible filaments, and photopolymer resins up to 300×300mm build volume.</p>
+      <a class="book-btn" onclick="event.stopPropagation();openModal('3D Printer')">BOOK NOW →</a>
+    </div>
+    <div class="booking-card" onclick="openModal('Laser Cutter')">
+      <div class="booking-card-tag">⬡ Laser Cutting Station</div>
+      <h3>LASER CUTTER</h3>
+      <div class="availability"><div class="avail-dot"></div><div class="avail-text">1 / 1 UNIT AVAILABLE</div></div>
+      <p>CO₂ laser, 60W, 900×600mm bed. Cuts and engraves wood, acrylic, leather, fabric, and cardboard. 1mm precision.</p>
+      <a class="book-btn" onclick="event.stopPropagation();openModal('Laser Cutter')">BOOK NOW →</a>
+    </div>
+    <div class="booking-card" onclick="openModal('CNC Router')">
+      <div class="booking-card-tag">⬡ CNC Machining Station</div>
+      <h3>CNC ROUTER</h3>
+      <div class="availability"><div class="avail-dot busy"></div><div class="avail-text busy" style="color:#FFB000;">IN USE · NEXT SLOT 14:00</div></div>
+      <p>3-axis CNC mill for wood, foam, and soft metals. 600×400mm work area. Perfect for custom enclosures and PCB prototypes.</p>
+      <a class="book-btn" onclick="event.stopPropagation();openModal('CNC Router')">BOOK NOW →</a>
+    </div>
+    <div class="booking-card" onclick="openModal('Electronics Workstation')">
+      <div class="booking-card-tag">⬡ Electronics Station</div>
+      <h3>ELECTRONICS LAB</h3>
+      <div class="availability"><div class="avail-dot"></div><div class="avail-text">4 / 5 STATIONS AVAILABLE</div></div>
+      <p>Oscilloscopes, soldering stations, power supplies, multimeters, PCB fabrication tools. Full component library included.</p>
+      <a class="book-btn" onclick="event.stopPropagation();openModal('Electronics Workstation')">BOOK NOW →</a>
+    </div>
+  </div>
+
+  <div class="booking-form-wrap">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Student / Staff ID</label>
+        <input type="text" placeholder="e.g. 6532012345"/>
+      </div>
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" placeholder="Your full name"/>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Equipment</label>
+        <select id="equipSelect">
+          <option value="">— Select Machine —</option>
+          <option>3D Printer (FDM)</option>
+          <option>3D Printer (Resin)</option>
+          <option>Laser Cutter</option>
+          <option>CNC Router</option>
+          <option>Electronics Workstation</option>
+          <option>Vinyl Cutter</option>
+          <option>Heat Press</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date" id="bookDate"/>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Start Time</label>
+        <input type="time"/>
+      </div>
+      <div class="form-group">
+        <label>Duration</label>
+        <select>
+          <option>1 Hour</option>
+          <option>2 Hours</option>
+          <option>3 Hours</option>
+          <option>4 Hours</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom:16px;">
+      <label>Project Description</label>
+      <textarea rows="3" placeholder="Briefly describe your project..."></textarea>
+    </div>
+    <button class="submit-btn" onclick="submitBooking()">⬡ CONFIRM BOOKING</button>
+  </div>
+</section>
+</div>
+
+<!-- MACHINES -->
+<section id="machines">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Equipment & Machines</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="machines-grid">
+    <div class="machine-card">
+      <span class="machine-icon">🖨️</span>
+      <div class="machine-name">FDM PRINTER ×3</div>
+      <div class="machine-spec">
+        <div><span>▸</span>Creality Ender 3 S1 Pro</div>
+        <div><span>▸</span>Build: 300×300×350mm</div>
+        <div><span>▸</span>0.1–0.4mm layer height</div>
+        <div><span>▸</span>PLA / PETG / ABS / TPU</div>
+      </div>
+      <div class="machine-status online"><span class="avail-dot"></span>ONLINE</div>
+    </div>
+    <div class="machine-card">
+      <span class="machine-icon">💎</span>
+      <div class="machine-name">RESIN PRINTER ×1</div>
+      <div class="machine-spec">
+        <div><span>▸</span>Elegoo Saturn 3 Ultra</div>
+        <div><span>▸</span>Build: 218×123×260mm</div>
+        <div><span>▸</span>12K MSLA resolution</div>
+        <div><span>▸</span>Standard / ABS-like Resin</div>
+      </div>
+      <div class="machine-status online"><span class="avail-dot"></span>ONLINE</div>
+    </div>
+    <div class="machine-card">
+      <span class="machine-icon">🔆</span>
+      <div class="machine-name">LASER CUTTER ×1</div>
+      <div class="machine-spec">
+        <div><span>▸</span>Thunder Laser Nova 51</div>
+        <div><span>▸</span>Bed: 900×600mm</div>
+        <div><span>▸</span>60W CO₂</div>
+        <div><span>▸</span>Wood / Acrylic / Leather</div>
+      </div>
+      <div class="machine-status online"><span class="avail-dot"></span>ONLINE</div>
+    </div>
+    <div class="machine-card">
+      <span class="machine-icon">⚙️</span>
+      <div class="machine-name">CNC ROUTER ×1</div>
+      <div class="machine-spec">
+        <div><span>▸</span>Snapmaker 2.0 A350T</div>
+        <div><span>▸</span>Work: 600×400mm</div>
+        <div><span>▸</span>3-axis milling</div>
+        <div><span>▸</span>Wood / Foam / Soft metal</div>
+      </div>
+      <div class="machine-status busy"><span class="avail-dot busy"></span>IN USE</div>
+    </div>
+    <div class="machine-card">
+      <span class="machine-icon">🔌</span>
+      <div class="machine-name">ELECTRONICS LAB ×5</div>
+      <div class="machine-spec">
+        <div><span>▸</span>Rigol DS1054Z Oscilloscope</div>
+        <div><span>▸</span>Weller WE1010 Solder Station</div>
+        <div><span>▸</span>Bench power supply (5A)</div>
+        <div><span>▸</span>Full component library</div>
+      </div>
+      <div class="machine-status online"><span class="avail-dot"></span>ONLINE</div>
+    </div>
+    <div class="machine-card">
+      <span class="machine-icon">✂️</span>
+      <div class="machine-name">VINYL CUTTER ×1</div>
+      <div class="machine-spec">
+        <div><span>▸</span>Silhouette Cameo 4</div>
+        <div><span>▸</span>Max width: 305mm</div>
+        <div><span>▸</span>Force: 5000g</div>
+        <div><span>▸</span>Vinyl / HTV / Paper</div>
+      </div>
+      <div class="machine-status online"><span class="avail-dot"></span>ONLINE</div>
+    </div>
+    <div class="machine-card">
+      <span class="machine-icon">🖥️</span>
+      <div class="machine-name">DESIGN WORKSTATION ×2</div>
+      <div class="machine-spec">
+        <div><span>▸</span>Intel i9 / RTX 4070</div>
+        <div><span>▸</span>32GB RAM / 2TB NVMe</div>
+        <div><span>▸</span>Fusion 360, Blender, Cura</div>
+        <div><span>▸</span>4K 27" Display + Wacom</div>
+      </div>
+      <div class="machine-status online"><span class="avail-dot"></span>ONLINE</div>
+    </div>
+    <div class="machine-card">
+      <span class="machine-icon">🔥</span>
+      <div class="machine-name">HEAT PRESS ×1</div>
+      <div class="machine-spec">
+        <div><span>▸</span>Swing-away 38×38cm</div>
+        <div><span>▸</span>Temp: up to 230°C</div>
+        <div><span>▸</span>Digital timer + pressure</div>
+        <div><span>▸</span>Sublimation / HTV</div>
+      </div>
+      <div class="machine-status online"><span class="avail-dot"></span>ONLINE</div>
+    </div>
+  </div>
+</section>
+
+<!-- INVENTORY -->
+<section id="inventory">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Materials Inventory</h2>
+    <div class="section-line"></div>
+  </div>
+  <div style="overflow-x:auto;">
+  <table class="inventory-table">
+    <thead>
+      <tr>
+        <th>Material</th>
+        <th>Category</th>
+        <th>Qty</th>
+        <th>Unit</th>
+        <th>Status</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>PLA Filament — White</td><td>3D Printing</td><td>12</td><td>spools</td><td><span class="inv-badge high">HIGH</span></td><td>1.75mm, 1kg rolls</td></tr>
+      <tr><td>PLA Filament — Black</td><td>3D Printing</td><td>8</td><td>spools</td><td><span class="inv-badge high">HIGH</span></td><td>1.75mm, 1kg rolls</td></tr>
+      <tr><td>PLA Filament — Pink</td><td>3D Printing</td><td>2</td><td>spools</td><td><span class="inv-badge low">LOW</span></td><td>Restock soon</td></tr>
+      <tr><td>PETG Filament</td><td>3D Printing</td><td>5</td><td>spools</td><td><span class="inv-badge high">HIGH</span></td><td>Clear &amp; black</td></tr>
+      <tr><td>TPU Flexible Filament</td><td>3D Printing</td><td>1</td><td>spool</td><td><span class="inv-badge low">LOW</span></td><td>95A shore hardness</td></tr>
+      <tr><td>ABS-like Resin — Grey</td><td>3D Printing</td><td>3</td><td>bottles</td><td><span class="inv-badge high">HIGH</span></td><td>500ml each</td></tr>
+      <tr><td>Acrylic Sheet 3mm — Clear</td><td>Laser Cutting</td><td>20</td><td>sheets</td><td><span class="inv-badge high">HIGH</span></td><td>600×400mm</td></tr>
+      <tr><td>Acrylic Sheet 3mm — Black</td><td>Laser Cutting</td><td>15</td><td>sheets</td><td><span class="inv-badge high">HIGH</span></td><td>600×400mm</td></tr>
+      <tr><td>MDF Wood Board 3mm</td><td>Laser / CNC</td><td>10</td><td>sheets</td><td><span class="inv-badge high">HIGH</span></td><td>600×400mm</td></tr>
+      <tr><td>Plywood 5mm</td><td>CNC Router</td><td>4</td><td>sheets</td><td><span class="inv-badge low">LOW</span></td><td>Restock pending</td></tr>
+      <tr><td>Arduino Uno R3</td><td>Electronics</td><td>15</td><td>pcs</td><td><span class="inv-badge high">HIGH</span></td><td>Borrowable</td></tr>
+      <tr><td>ESP32 Dev Board</td><td>Electronics</td><td>12</td><td>pcs</td><td><span class="inv-badge high">HIGH</span></td><td>38-pin variant</td></tr>
+      <tr><td>Raspberry Pi 4 (4GB)</td><td>Electronics</td><td>2</td><td>pcs</td><td><span class="inv-badge low">LOW</span></td><td>Lab use only</td></tr>
+      <tr><td>Servo MG996R</td><td>Electronics</td><td>0</td><td>pcs</td><td><span class="inv-badge out">OUT</span></td><td>Order placed</td></tr>
+      <tr><td>Solder Wire (60/40)</td><td>Electronics</td><td>6</td><td>rolls</td><td><span class="inv-badge high">HIGH</span></td><td>0.8mm</td></tr>
+      <tr><td>Heat Shrink Assortment</td><td>Electronics</td><td>4</td><td>kits</td><td><span class="inv-badge high">HIGH</span></td><td>Mixed sizes</td></tr>
+      <tr><td>Vinyl — Pink HTV</td><td>Vinyl Cutting</td><td>3</td><td>rolls</td><td><span class="inv-badge high">HIGH</span></td><td>30cm wide</td></tr>
+      <tr><td>Safety Goggles</td><td>Safety</td><td>10</td><td>pcs</td><td><span class="inv-badge high">HIGH</span></td><td>Mandatory for laser/CNC</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- KNOWLEDGE BASE -->
+<section id="knowledge">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Knowledge Base</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="kb-grid">
+    <div class="kb-card">
+      <div class="kb-category">Getting Started</div>
+      <h3>Lab Orientation Guide</h3>
+      <p>First time in FabLab Room 408? Read this before touching any machine. Safety protocols, booking rules, and an equipment overview.</p>
+      <div class="kb-tags"><span class="kb-tag">Required</span><span class="kb-tag">Safety</span></div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-category">3D Printing</div>
+      <h3>Slicing for Beginners (Cura)</h3>
+      <p>How to slice your STL files using Ultimaker Cura. Optimal settings for PLA, support structures, and print bed adhesion tips.</p>
+      <div class="kb-tags"><span class="kb-tag">FDM</span><span class="kb-tag">Cura</span><span class="kb-tag">PLA</span></div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-category">3D Printing</div>
+      <h3>Resin Printing Safety & Workflow</h3>
+      <p>Handling photopolymer resins safely, PPE requirements, washing and curing process for MSLA prints.</p>
+      <div class="kb-tags"><span class="kb-tag">Resin</span><span class="kb-tag">Safety</span><span class="kb-tag">PPE</span></div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-category">Laser Cutting</div>
+      <h3>Laser Power & Speed Settings</h3>
+      <p>Calibration table for common materials: acrylic 3mm, MDF, wood, and leather. Avoid charring and achieve clean cuts.</p>
+      <div class="kb-tags"><span class="kb-tag">Laser</span><span class="kb-tag">Settings</span><span class="kb-tag">Materials</span></div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-category">Laser Cutting</div>
+      <h3>Designing for Laser (Inkscape)</h3>
+      <p>Vector file setup in Inkscape for laser-ready DXF and SVG files. Stroke width rules, layer colors, and kerf compensation.</p>
+      <div class="kb-tags"><span class="kb-tag">Vector</span><span class="kb-tag">Inkscape</span><span class="kb-tag">DXF</span></div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-category">Electronics</div>
+      <h3>ESP32 + Arduino Quickstart</h3>
+      <p>Setting up the Arduino IDE for ESP32, basic GPIO, PWM servo control with ESP32Servo library, and WiFi connectivity.</p>
+      <div class="kb-tags"><span class="kb-tag">ESP32</span><span class="kb-tag">Arduino</span><span class="kb-tag">IoT</span></div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-category">Electronics</div>
+      <h3>PCB Prototyping Workflow</h3>
+      <p>From schematic to PCB layout in EasyEDA. Ordering from JLCPCB, soldering SMD components, and testing with oscilloscope.</p>
+      <div class="kb-tags"><span class="kb-tag">PCB</span><span class="kb-tag">EasyEDA</span><span class="kb-tag">SMD</span></div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-category">3D Design</div>
+      <h3>Fusion 360 for Makers</h3>
+      <p>Parametric modeling basics, exporting STL for 3D printing, DXF for laser cutting, and toolpath setup for CNC.</p>
+      <div class="kb-tags"><span class="kb-tag">CAD</span><span class="kb-tag">Fusion360</span><span class="kb-tag">Parametric</span></div>
+    </div>
+    <div class="kb-card">
+      <div class="kb-category">Resources</div>
+      <h3>Free Design Asset Libraries</h3>
+      <p>Curated links to Thingiverse, Printables, Makerworld, Hackaday, and Instructables for models, schematics, and project inspiration.</p>
+      <div class="kb-tags"><span class="kb-tag">Links</span><span class="kb-tag">Models</span><span class="kb-tag">Open Source</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div id="contact">
+<section class="contact-inner" style="max-width:1200px;margin:0 auto;padding:0;">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Contact & NFC Access</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="officer-card">
+        <div class="officer-avatar">S</div>
+        <div>
+          <div class="officer-name">SUNNY</div>
+          <div class="officer-title">FabLab Engineering Officer</div>
+          <div class="officer-email"><a href="mailto:sunny.s@chula.ac.th">sunny.s@chula.ac.th</a></div>
+        </div>
+      </div>
+
+      <ul class="contact-details-list">
+        <li>
+          <div class="cd-icon">📍</div>
+          <span>Room 408, 4th Floor, Chaloem Rajakumari 60 <br/>CSII, Chulalongkorn University, Bangkok</span>
+        </li>
+        <li>
+          <div class="cd-icon">⏰</div>
+          <span>Monday – Friday · 08:00 – 20:00<br/>Saturday · 09:00 – 16:00 (by appointment)</span>
+        </li>
+        <li>
+          <div class="cd-icon">📡</div>
+          <span>NFC tap to access this portal instantly<br/>from any NFC-enabled smartphone</span>
+        </li>
+        <li>
+          <div class="cd-icon">🔗</div>
+          <span>For urgent machine issues or lab access,<br/>email Sunny directly for fastest response</span>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <!-- NFC PANEL -->
+      <div class="nfc-panel">
+        <div class="nfc-circle">
+          <span style="font-size:2.2rem;">📡</span>
+        </div>
+        <div class="nfc-label">NFC SMART ACCESS</div>
+        <p class="nfc-desc">
+          This FabLab portal is linked to an NFC tag at Room 408.<br/>
+          Tap your phone to the red NFC tag at the lab entrance<br/>
+          to instantly open this booking portal — no app required.
+        </p>
+        <div style="margin-bottom:16px;">
+          <div style="font-family:'Share Tech Mono',monospace;font-size:0.68rem;letter-spacing:3px;color:var(--sub);margin-bottom:8px;">DIRECT URL</div>
+          <a class="nfc-url" href="#">fablab-cu.vercel.app</a>
+        </div>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:var(--sub);letter-spacing:1px;line-height:1.7;">
+          <div>✓ Android: Tap &amp; go (NFC enabled)</div>
+          <div>✓ iPhone: Settings → NFC or Shortcuts app</div>
+          <div>✓ Any browser · No app install needed</div>
+        </div>
+      </div>
+
+      <!-- NFC SETUP GUIDE -->
+      <div style="background:var(--panel);border:1px solid var(--border);padding:24px;margin-top:20px;">
+        <div style="font-family:'Share Tech Mono',monospace;font-size:0.68rem;letter-spacing:3px;color:var(--cyan);margin-bottom:16px;text-transform:uppercase;">How to Program Your NFC Tag</div>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:0.78rem;color:var(--sub);line-height:2;">
+          <div><span style="color:var(--pink);">01.</span> Download "NFC Tools" app (iOS/Android)</div>
+          <div><span style="color:var(--pink);">02.</span> Tap "Write" → Add Record → URL</div>
+          <div><span style="color:var(--pink);">03.</span> Enter: <span style="color:var(--cyan);">fablab-cu.vercel.app</span></div>
+          <div><span style="color:var(--pink);">04.</span> Tap your red NFC tag to write</div>
+          <div><span style="color:var(--pink);">05.</span> Test: hold any phone near the tag ✓</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a class="footer-logo" href="#hero">FABLAB CSII · R408</a>
+  <div class="footer-copy">© 2025 CHULALONGKORN UNIVERSITY · CSII · ENGINEERED BY SUNNY</div>
+  <div style="font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:rgba(255,0,110,0.5);letter-spacing:2px;">SYS_OK</div>
+</footer>
+
+<!-- BOOKING MODAL -->
+<div class="modal-overlay" id="bookModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-title">BOOKING CONFIRMED</div>
+    <div class="modal-sub">RESERVATION REQUEST SUBMITTED</div>
+    <div id="confirmForm">
+      <div class="form-group" style="margin-bottom:16px;">
+        <label>Machine Selected</label>
+        <input type="text" id="modalMachine" readonly style="cursor:not-allowed;opacity:.7;"/>
+      </div>
+      <p style="font-family:'Share Tech Mono',monospace;font-size:0.8rem;color:var(--sub);line-height:1.7;margin-bottom:20px;">
+        Fill in the booking form below and click "Confirm Booking" to submit your request.<br/>
+        You will receive a confirmation at your university email.
+      </p>
+      <button class="submit-btn" onclick="showSuccess()" style="width:100%;">⬡ SUBMIT REQUEST</button>
+    </div>
+    <div class="success-msg" id="successMsg">
+      <span>✓</span>BOOKING SUBMITTED!<br/>
+      <span style="font-family:'Share Tech Mono',monospace;font-size:0.75rem;font-weight:400;color:var(--sub);display:block;margin-top:8px;">CHECK YOUR CHULA EMAIL FOR CONFIRMATION</span>
+    </div>
+  </div>
+</div>
+
+<script>
+// Set default date
+document.getElementById('bookDate').valueAsDate = new Date();
+
+function openModal(machine) {
+  document.getElementById('modalMachine').value = machine;
+  document.getElementById('equipSelect').value = machine;
+  document.getElementById('bookModal').classList.add('open');
+  document.getElementById('confirmForm').style.display='block';
+  document.getElementById('successMsg').style.display='none';
+}
+function closeModal() {
+  document.getElementById('bookModal').classList.remove('open');
+}
+function submitBooking() {
+  const sel = document.getElementById('equipSelect').value;
+  openModal(sel || 'Equipment');
+}
+function showSuccess() {
+  document.getElementById('confirmForm').style.display='none';
+  document.getElementById('successMsg').style.display='block';
+  setTimeout(closeModal, 2800);
+}
+document.getElementById('bookModal').addEventListener('click', function(e){
+  if(e.target===this)closeModal();
+});
+
+// Smooth scroll for nav
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+    if(href.length > 1) {
+      e.preventDefault();
+      document.querySelector(href)?.scrollIntoView({behavior:'smooth'});
+    }
+  });
+});
+
+// Glitch hero on scroll
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  document.querySelector('nav').style.background =
+    y > 50 ? 'rgba(5,2,13,0.97)' : 'rgba(5,2,13,0.85)';
+});
+</script>
+</body>
+</html>
